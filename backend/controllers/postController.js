@@ -9,6 +9,11 @@ const getPosts = (req, res) => {
 // @route   POST /api/posts
 // @access  Private
 const setPosts = (req, res) => {
+  if (!req.body.text) {
+    res.status(400);
+    throw new Error("Please add a text field");
+  }
+
   res.json({ message: "Set post" });
 };
 
