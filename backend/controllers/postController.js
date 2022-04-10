@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 
 const Post = require("../models/postModel");
+const User = require("../models/userModel");
 
 // @desc    Get posts
 // @route   GET /api/posts
@@ -39,6 +40,20 @@ const updatePost = asyncHandler(async (req, res) => {
     throw new Error("Post not found");
   }
 
+  const user = await User.findById(req.user.id);
+
+  // Check for user
+  if (!user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  // Make sure the logged in user matches the post user
+  if (post.user.toString() !== user.id) {
+    res.status(401);
+    throw new Error("User not authorized");
+  }
+
   const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
@@ -55,6 +70,20 @@ const deletePost = asyncHandler(async (req, res) => {
   if (!post) {
     res.status(400);
     throw new Error("Post not found");
+  }
+
+  const user = await User.findById(req.user.id);
+
+  // Check for user
+  if (!user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  // Make sure the logged in user matches the post user
+  if (post.user.toString() !== user.id) {
+    res.status(401);
+    throw new Error("User not authorized");
   }
 
   await post.remove();
