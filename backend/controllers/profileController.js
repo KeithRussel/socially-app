@@ -1,6 +1,8 @@
 const asyncHandler = require("express-async-handler");
 
 const Profile = require("../models/profileModel");
+const User = require("../models/userModel");
+const Post = require("../models/postModel");
 
 // @desc    Get posts
 // @route   GET /api/profile/me
@@ -22,7 +24,7 @@ const getProfileMe = asyncHandler(async (req, res) => {
   //   res.json({ message: "User profile display" });
 });
 
-// @desc    Create user profile
+// @desc    Create or Update user profile
 // @route   POST /api/profile
 // @access  Private
 const setProfile = asyncHandler(async (req, res) => {
@@ -69,9 +71,26 @@ const getUserProfile = asyncHandler(async (req, res) => {
   res.status(200).json(profile);
 });
 
+// @desc    Delete profile, user & posts
+// @route   GET /api/profile/
+// @access  Private
+const deleteUserProfile = asyncHandler(async (req, res) => {
+  // Delete profile
+  await Profile.findOneAndRemove({ user: req.user.id });
+
+  // Delete user account
+  await User.findByIdAndRemove({ _id: req.user.id });
+
+  // Delete user posts
+  await Post.deleteMany({ user: req.user.id });
+
+  res.status(200).json({ msg: "User Removed" });
+});
+
 module.exports = {
   getProfileMe,
   setProfile,
   getProfiles,
   getUserProfile,
+  deleteUserProfile,
 };
