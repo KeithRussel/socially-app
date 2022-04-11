@@ -47,11 +47,31 @@ const setProfile = asyncHandler(async (req, res) => {
 // @route   POST /api/profile
 // @access  Public
 const getProfiles = asyncHandler(async (req, res) => {
-  res.json({ message: "Get all profiles" });
+  const profiles = await Profile.find().populate("user", ["name", "email"]);
+
+  res.status(200).json(profiles);
+});
+
+// @desc    Get user profile by id
+// @route   GET /api/profile/user/:user_id
+// @access  Public
+const getUserProfile = asyncHandler(async (req, res) => {
+  const profile = await Profile.findOne({ user: req.params.user_id }).populate(
+    "user",
+    ["name", "email"]
+  );
+
+  if (!profile) {
+    res.status(400);
+    throw new Error("Profile not found");
+  }
+
+  res.status(200).json(profile);
 });
 
 module.exports = {
   getProfileMe,
   setProfile,
   getProfiles,
+  getUserProfile,
 };
