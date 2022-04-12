@@ -67,14 +67,27 @@ const updatePost = asyncHandler(async (req, res) => {
 const likePost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id);
 
-  // If post already liked
+  // Remove index
+  const removeIndex = post.likes
+    .map((like) => like.user.toString())
+    .indexOf(req.user.id);
+
   if (
+    // If post already liked
     post.likes.filter((like) => like.user.toString() === req.user.id).length > 0
   ) {
-    res.status(400).json({ message: "You already like" });
+    // Unlike post
+    post.likes.splice(removeIndex, 1);
+  } else if (
+    post.likes.filter((like) => like.user.toString() === req.user.id).length ===
+    0
+  ) {
+    // Like post
+    post.likes.unshift({ user: req.user.id });
+  } else {
+    res.status(401);
+    throw new Error("Something is wrong in Like data");
   }
-
-  post.likes.unshift({ user: req.user.id });
 
   await post.save();
 
