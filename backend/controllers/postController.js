@@ -61,6 +61,28 @@ const updatePost = asyncHandler(async (req, res) => {
   res.status(200).json(updatedPost);
 });
 
+// @desc    Like a post
+// @route   GET /api/posts/like/:id
+// @access  Private
+const likePost = asyncHandler(async (req, res) => {
+  const post = await Post.findById(req.params.id);
+
+  // If post already liked
+  if (
+    post.likes.filter((like) => like.user.toString() === req.user.id).length > 0
+  ) {
+    res.status(400).json({ message: "You already like" });
+  }
+
+  post.likes.unshift({ user: req.user.id });
+
+  await post.save();
+
+  res.json(post.likes);
+
+  // res.status(200).json({ message: "Liked" });
+});
+
 // @desc    Delete post
 // @route   DELETE /api/posts
 // @access  Private
@@ -96,4 +118,5 @@ module.exports = {
   setPosts,
   updatePost,
   deletePost,
+  likePost,
 };

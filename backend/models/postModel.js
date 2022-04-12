@@ -11,6 +11,14 @@ const postSchema = mongoose.Schema(
       type: String,
       require: [true, "Please add a text value"],
     },
+    likes: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+      },
+    ],
   },
   {
     timestamps: true,
