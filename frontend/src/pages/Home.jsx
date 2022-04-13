@@ -28,9 +28,9 @@ const Home = () => {
             <div className="user__post">
               <p>user post sample</p>
             </div>
-            <div class="posts__buttons btn-group">
-              <div type="button" class="likes">Like</div>
-              <div type="button" class="comments">Comment</div>
+            <div className="posts__buttons btn-group">
+              <div type="button" className="likes">Like</div>
+              <div type="button" className="comments">Comment</div>
             </div>
           </div>
         </section>
