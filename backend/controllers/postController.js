@@ -2,12 +2,37 @@ const asyncHandler = require("express-async-handler");
 
 const Post = require("../models/postModel");
 const User = require("../models/userModel");
+const Profile = require("../models/profileModel");
 
 // @desc    Get posts
 // @route   GET /api/posts
 // @access  Private
 const getPosts = asyncHandler(async (req, res) => {
   const posts = await Post.find();
+
+  res.status(200).json(posts);
+});
+
+// @desc    Get user posts by id
+// @route   GET /api/posts/user/:id
+// @access  Public
+const getUserPosts = asyncHandler(async (req, res) => {
+  const posts = await Post.find({
+    user: req.params.id,
+  });
+
+  // const user = await User.findById(req.params.id);
+  // const profile = await Profile.findById(req.params.id);
+
+  // if (!user) {
+  //   res.status(401);
+  //   throw new Error("User not found");
+  // }
+
+  if (!posts) {
+    res.status(401);
+    throw new Error("This user have no posts");
+  }
 
   res.status(200).json(posts);
 });
@@ -132,4 +157,5 @@ module.exports = {
   updatePost,
   deletePost,
   likePost,
+  getUserPosts,
 };
