@@ -2,7 +2,6 @@ const asyncHandler = require("express-async-handler");
 
 const Post = require("../models/postModel");
 const User = require("../models/userModel");
-const Profile = require("../models/profileModel");
 
 // @desc    Get posts
 // @route   GET /api/posts
@@ -20,14 +19,6 @@ const getUserPosts = asyncHandler(async (req, res) => {
   const posts = await Post.find({
     user: req.params.id,
   });
-
-  // const user = await User.findById(req.params.id);
-  // const profile = await Profile.findById(req.params.id);
-
-  // if (!user) {
-  //   res.status(401);
-  //   throw new Error("User not found");
-  // }
 
   if (!posts) {
     res.status(401);
