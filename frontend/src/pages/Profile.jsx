@@ -1,5 +1,5 @@
 import Header from '../components/Header'
-import {FaUser, FaEllipsisH} from 'react-icons/fa'
+import {FaEllipsisH} from 'react-icons/fa'
 
 function Profile() {
   return (

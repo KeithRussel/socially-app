@@ -1,11 +1,9 @@
 import { useState } from 'react'
-import {useDispatch} from 'react-redux'
 import {FaEllipsisH, FaEdit, FaTrash} from 'react-icons/fa'
 
 function PostItem({post}) {
     const [showButton, setShowButton] = useState(false)
     const onClick = () => {setShowButton(!showButton)}
-    // const dispatch = useDispatch()
 
     return (
     <div className="posts">

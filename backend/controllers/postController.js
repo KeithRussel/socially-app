@@ -7,7 +7,9 @@ const User = require("../models/userModel");
 // @route   GET /api/posts
 // @access  Private
 const getPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find().populate("user", ["name", "email"]);
+  const posts = await Post.find()
+    .sort({ updatedAt: -1 })
+    .populate("user", ["name", "email"]);
 
   res.status(200).json(posts);
 });

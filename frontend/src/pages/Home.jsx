@@ -5,6 +5,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import Spinner from '../components/Spinner'
 import { getPosts, reset } from '../features/posts/postSlice'
 import PostItem from '../components/PostItem'
+import PostForm from '../components/PostForm'
 
 const Home = () => {
   const navigate = useNavigate()
@@ -36,7 +37,7 @@ const Home = () => {
           <h1>COMING SOON</h1>
         </section>
         <section className="home__posts">
-          <h1>GET ALL POSTS</h1>
+          <PostForm />
           {posts.map((post) => (
             <PostItem key={post._id} post={post} />
           ))}
