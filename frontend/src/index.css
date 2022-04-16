@@ -209,6 +209,7 @@ button {
   border-radius: 15px;
   box-shadow: 2px 2px 2px #0000002e;
   background-color: #fff;
+  margin-bottom: 10px;
 }
 
 .posts__head {
@@ -218,6 +219,33 @@ button {
 
 .posts__head_flex {
   display: flex;
+}
+
+.posts__head_ellipsis div:nth-child(1) {
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
+  padding: 10px 0;
+}
+
+.posts__head_ellipsis div:nth-child(2) {
+  position: absolute;
+  right: 34rem;
+  z-index: 1000;
+  border: 1px solid #eee;
+}
+
+.posts__head_ellipsis div:nth-child(2) h4 {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  background-color: #ffffff;
+  color: #000;
+  cursor: pointer;
+}
+
+.posts__head_ellipsis div:nth-child(2) h4:hover {
+  background-color: #90089C;
+  color: #fff;
 }
 
 .user__post {

@@ -7,7 +7,7 @@ const User = require("../models/userModel");
 // @route   GET /api/posts
 // @access  Private
 const getPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find();
+  const posts = await Post.find().populate("user", ["name", "email"]);
 
   res.status(200).json(posts);
 });
