@@ -14,7 +14,7 @@ function PostItem({post}) {
             <div className="user__avatar"></div>
             <div className="posts__head_flex_col">
                 <div className="user__name">{post.user.name}</div>
-                <div className="posted__time"><small>{post.createdAt}</small></div>
+                <div className="posted__time"><small>{new Date(post.createdAt).toLocaleString('en-US')}</small></div>
             </div>
             </div>
             <div className='posts__head_ellipsis'>
