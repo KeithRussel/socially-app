@@ -6,6 +6,7 @@ import postService from "./postService";
 
 const initialState = {
   posts: [],
+  post: null,
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -29,12 +30,12 @@ export const getPosts = createAsyncThunk(
 );
 
 // Create user Post
-export const createPost = createAsyncThunk(
-  "posts/createPost",
+export const setPost = createAsyncThunk(
+  "posts/setPost",
   async (postData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await postService.createPost(postData, token);
+      return await postService.setPost(postData, token);
     } catch (error) {
       const message =
         (error.respose && error.response.data && error.response.data.message) ||
@@ -53,15 +54,16 @@ export const postsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createPost.pending, (state) => {
+      .addCase(setPost.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createPost.fulfilled, (state, action) => {
+      .addCase(setPost.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        // state.post = action.payload;
         state.posts.unshift(action.payload);
       })
-      .addCase(createPost.rejected, (state, action) => {
+      .addCase(setPost.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

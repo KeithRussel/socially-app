@@ -1,17 +1,24 @@
 import {useState} from 'react'
-import {useDispatch} from 'react-redux'
-import {createPost} from '../features/posts/postSlice'
+import {useDispatch, useSelector} from 'react-redux'
+import {setPost, getPosts} from '../features/posts/postSlice'
 
 function PostForm() {
 const [text, setText] = useState('')
 
 const dispatch = useDispatch()
 
+// const {posts, isLoading, isError, message, post} = useSelector((state) => state.posts)
+
 const onSubmit = e => {
     e.preventDefault()
 
-    dispatch(createPost({text}))
+    dispatch(setPost({text}))
     setText('')
+
+    // if(post) {
+        // dispatch(getPosts())
+        // console.log('test')
+    // }
 }
 
   return (

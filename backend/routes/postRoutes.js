@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
   getPosts,
-  setPosts,
+  setPost,
   updatePost,
   deletePost,
   likePost,
@@ -11,7 +11,7 @@ const {
 
 const { protect } = require("../middleware/authMiddleware");
 
-router.route("/").get(getPosts).post(protect, setPosts);
+router.route("/").get(getPosts).post(protect, setPost);
 router.route("/:id").delete(protect, deletePost).put(protect, updatePost);
 router.route("/like/:id").put(protect, likePost);
 router.route("/user/:id").get(getUserPosts);

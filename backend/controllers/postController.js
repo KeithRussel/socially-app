@@ -33,7 +33,7 @@ const getUserPosts = asyncHandler(async (req, res) => {
 // @desc    Set post
 // @route   POST /api/posts
 // @access  Private
-const setPosts = asyncHandler(async (req, res) => {
+const setPost = asyncHandler(async (req, res) => {
   if (!req.body.text) {
     res.status(400);
     throw new Error("Please add a text field");
@@ -146,7 +146,7 @@ const deletePost = asyncHandler(async (req, res) => {
 
 module.exports = {
   getPosts,
-  setPosts,
+  setPost,
   updatePost,
   deletePost,
   likePost,

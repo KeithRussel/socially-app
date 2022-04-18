@@ -2,8 +2,8 @@ import axios from "axios";
 
 const API_URL = "/api/posts/";
 
-// Create new POST
-const createPost = async (postData, token) => {
+// Create new post
+const setPost = async (postData, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -24,7 +24,7 @@ const getPosts = async () => {
 
 const postService = {
   getPosts,
-  createPost,
+  setPost,
 };
 
 export default postService;
