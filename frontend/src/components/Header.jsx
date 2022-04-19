@@ -19,11 +19,15 @@ function Header() {
             <Link to='/'>Socially</Link>
         </div>
         <ul>
-            {user ? (<li>
+            {user ? (<><li>
                 <button className='btn' onClick={onLogout}>
                     <FaSignInAlt /> Logout
                 </button>
-            </li>) : (<><li>
+            </li><li>
+                <Link to='/profile'>
+                    <FaUser /> Profile
+                </Link>
+            </li></>) : (<><li>
                 <Link to='/login'>
                     <FaSignInAlt /> Login
                 </Link>

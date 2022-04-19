@@ -14,11 +14,6 @@ const onSubmit = e => {
 
     dispatch(setPost({text}))
     setText('')
-
-    // if(post) {
-        // dispatch(getPosts())
-        // console.log('test')
-    // }
 }
 
   return (

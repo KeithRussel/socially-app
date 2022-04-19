@@ -1,7 +1,29 @@
+import {useEffect} from 'react'
 import Header from '../components/Header'
 import {FaEllipsisH} from 'react-icons/fa'
+import {useSelector, useDispatch} from 'react-redux'
+import Spinner from '../components/Spinner'
+import { getProfile, reset } from '../features/profile/profileSlice'
 
 function Profile() {
+  const dispatch = useDispatch()
+  const {profile, isLoading, isError, message} = useSelector((state) => state.profile)
+
+  useEffect(() => {
+    if(isError) {
+      console.log(message)
+    }
+
+    dispatch(getProfile())
+
+    return () => {
+      dispatch(reset())
+    }
+  }, [isError, message, dispatch])
+
+  if(isLoading) {
+    return <Spinner />
+  }
   return (
     <>
     <Header />
@@ -10,26 +32,30 @@ function Profile() {
         <img src="https://picsum.photos/1080/400" alt="" />
       </div>
       <div className="container">
-        <div className="profile__info">
+        {!profile ? <div>This user have no profile</div> : <><div className="profile__info">
           <div className="profile__avatar">
             <img src="https://picsum.photos/150/150" alt="" />
             <div className="profile__name">
-              <h3>Keith Russel</h3>
+              <h3>{profile.user.name}</h3>
             </div>
           </div>
           <div className="profile__edit">
-            <button type="button" class="edit-profile">Edit Profile</button>
+            <button type="button" className="edit-profile">Edit Profile</button>
           </div>
         </div>
         <div className="divider">
           <div className="divider__info">
             <div>
               <h3>Bio:</h3>
-              <p>Sample info here</p>
+              <p>{profile.bio}</p>
+            </div>
+            <div>
+              <h3>Address:</h3>
+              <p>{profile.address}</p>
             </div>
             <div>
               <h3>Joined:</h3>
-              <p>March 18, 1995</p>
+              <p>{profile.createdAt}</p>
             </div>
           </div>
           <div className="divider__posts">
@@ -49,9 +75,9 @@ function Profile() {
               <div className="user__post">
                 <p>user post sample</p>
               </div>
-              <div class="posts__buttons btn-group">
-                <div type="button" class="likes">Like</div>
-                <div type="button" class="comments">Comment</div>
+              <div className="posts__buttons btn-group">
+                <div type="button" className="likes">Like</div>
+                <div type="button" className="comments">Comment</div>
               </div>
             </div>
             <div className="posts">
@@ -70,14 +96,15 @@ function Profile() {
               <div className="user__post">
                 <p>user post sample</p>
               </div>
-              <div class="posts__buttons btn-group">
-                <div type="button" class="likes">Like</div>
-                <div type="button" class="comments">Comment</div>
+              <div className="posts__buttons btn-group">
+                <div type="button" className="likes">Like</div>
+                <div type="button" className="comments">Comment</div>
               </div>
             </div>
           </div>
           <div className='divider__settings'></div>
-        </div>
+        </div></>}
+        
       </div>
     </div>
     </>

@@ -17,9 +17,7 @@ const getProfileMe = asyncHandler(async (req, res) => {
     throw new Error("There is no profile for this user");
   }
 
-  res.status(200).json({
-    profile,
-  });
+  res.status(200).json(profile);
 
   //   res.json({ message: "User profile display" });
 });

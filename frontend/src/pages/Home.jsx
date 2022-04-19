@@ -11,10 +11,15 @@ const Home = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const {posts, isLoading, isError, message} = useSelector((state) => state.posts)
+  const {user} = useSelector((state)=>state.auth)
 
   useEffect(() => {
     if(isError) {
       console.log(message)
+    }
+
+    if(!user) {
+      navigate('/login')
     }
 
     dispatch(getPosts())
