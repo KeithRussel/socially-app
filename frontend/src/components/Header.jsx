@@ -24,7 +24,7 @@ function Header() {
                     <FaSignInAlt /> Logout
                 </button>
             </li><li>
-                <Link to='/profile'>
+                <Link to={`/profile/user/${user._id}`}>
                     <FaUser /> Profile
                 </Link>
             </li></>) : (<><li>

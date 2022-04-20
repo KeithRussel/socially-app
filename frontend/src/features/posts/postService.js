@@ -22,9 +22,17 @@ const getPosts = async () => {
   return response.data;
 };
 
+// Get user posts
+const getUserPosts = async (userId) => {
+  const response = await axios.get(API_URL + `user/${userId}`);
+
+  return response.data;
+};
+
 const postService = {
   getPosts,
   setPost,
+  getUserPosts,
 };
 
 export default postService;

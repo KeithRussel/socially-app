@@ -13,6 +13,22 @@ const initialState = {
   message: "",
 };
 
+// Get user posts
+export const getUserPosts = createAsyncThunk(
+  "posts/getUserPosts",
+  async (userId, thunkAPI) => {
+    try {
+      return await postService.getUserPosts(userId);
+    } catch (error) {
+      const message =
+        (error.respose && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Get all public posts
 export const getPosts = createAsyncThunk(
   "posts/getPosts",
@@ -54,6 +70,19 @@ export const postsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getUserPosts.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUserPosts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.posts = action.payload;
+      })
+      .addCase(getUserPosts.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
       .addCase(setPost.pending, (state) => {
         state.isLoading = true;
       })

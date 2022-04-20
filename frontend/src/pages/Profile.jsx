@@ -4,22 +4,25 @@ import {FaEllipsisH} from 'react-icons/fa'
 import {useSelector, useDispatch} from 'react-redux'
 import Spinner from '../components/Spinner'
 import { getProfile, reset } from '../features/profile/profileSlice'
+import { getUserPosts } from '../features/posts/postSlice'
 
 function Profile() {
   const dispatch = useDispatch()
   const {profile, isLoading, isError, message} = useSelector((state) => state.profile)
+  const {user} = useSelector((state)=>state.auth)
 
   useEffect(() => {
     if(isError) {
       console.log(message)
     }
-
     dispatch(getProfile())
+
+    dispatch(getUserPosts(user._id))
 
     return () => {
       dispatch(reset())
     }
-  }, [isError, message, dispatch])
+  }, [isError, message, dispatch, user._id])
 
   if(isLoading) {
     return <Spinner />
