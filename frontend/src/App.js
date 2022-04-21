@@ -13,7 +13,7 @@ function App() {
         {/* <Header /> */}
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/profile/user/:id" element={<Profile />} />
+          <Route path="/profile/user/me" element={<Profile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>

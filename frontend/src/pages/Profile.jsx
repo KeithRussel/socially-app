@@ -5,11 +5,13 @@ import {useSelector, useDispatch} from 'react-redux'
 import Spinner from '../components/Spinner'
 import { getProfile, reset } from '../features/profile/profileSlice'
 import { getUserPosts } from '../features/posts/postSlice'
+import PostItem from '../components/PostItem'
 
 function Profile() {
   const dispatch = useDispatch()
   const {profile, isLoading, isError, message} = useSelector((state) => state.profile)
   const {user} = useSelector((state)=>state.auth)
+  const {posts} = useSelector((state)=>state.posts)
 
   useEffect(() => {
     if(isError) {
@@ -62,48 +64,9 @@ function Profile() {
             </div>
           </div>
           <div className="divider__posts">
-            <div className="posts">
-              <div className='posts__head'>
-                <div className="posts__head_flex">
-                  <div className="user__avatar"></div>
-                  <div className="posts__head_flex_col">
-                    <div className="user__name">Name</div>
-                    <div className="posted__time"><small>Time</small></div>
-                  </div>
-                </div>
-                <div className='posts__head_ellipsis'>
-                  <FaEllipsisH />
-                </div>
-              </div>
-              <div className="user__post">
-                <p>user post sample</p>
-              </div>
-              <div className="posts__buttons btn-group">
-                <div type="button" className="likes">Like</div>
-                <div type="button" className="comments">Comment</div>
-              </div>
-            </div>
-            <div className="posts">
-              <div className='posts__head'>
-                <div className="posts__head_flex">
-                  <div className="user__avatar"></div>
-                  <div className="posts__head_flex_col">
-                    <div className="user__name">Name</div>
-                    <div className="posted__time"><small>Time</small></div>
-                  </div>
-                </div>
-                <div className='posts__head_ellipsis'>
-                  <FaEllipsisH />
-                </div>
-              </div>
-              <div className="user__post">
-                <p>user post sample</p>
-              </div>
-              <div className="posts__buttons btn-group">
-                <div type="button" className="likes">Like</div>
-                <div type="button" className="comments">Comment</div>
-              </div>
-            </div>
+          {posts ? posts.map((post) => (
+            <PostItem key={post._id} post={post} />
+          )) : null}
           </div>
           <div className='divider__settings'></div>
         </div></>}

@@ -4,7 +4,7 @@ const Profile = require("../models/profileModel");
 const User = require("../models/userModel");
 const Post = require("../models/postModel");
 
-// @desc    Get posts
+// @desc    Get my profile
 // @route   GET /api/profile/me
 // @access  Private
 const getProfileMe = asyncHandler(async (req, res) => {

@@ -20,7 +20,7 @@ const getPosts = asyncHandler(async (req, res) => {
 const getUserPosts = asyncHandler(async (req, res) => {
   const posts = await Post.find({
     user: req.params.id,
-  });
+  }).populate("user", ["name", "email"]);
 
   if (!posts) {
     res.status(401);
