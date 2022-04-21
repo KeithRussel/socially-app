@@ -1,9 +1,13 @@
 import { useState } from 'react'
 import {FaEllipsisH, FaEdit, FaTrash} from 'react-icons/fa'
+import { useDispatch } from 'react-redux'
+import {deletePost} from '../features/posts/postSlice'
 
 function PostItem({post}) {
     const [showButton, setShowButton] = useState(false)
     const onClick = () => {setShowButton(!showButton)}
+
+    const dispatch = useDispatch()
 
     return (
     <div className="posts">
@@ -19,7 +23,7 @@ function PostItem({post}) {
                 <div onClick={onClick}><FaEllipsisH /></div>
                 {showButton ?<div>
                     <h4><FaEdit /> Edit</h4>
-                    <h4><FaTrash /> Delete</h4>
+                    <h4 onClick={() => dispatch(deletePost(post._id))}><FaTrash /> Delete</h4>
                 </div> : null }
                 
             </div>

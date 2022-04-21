@@ -27,7 +27,7 @@ const Home = () => {
     return () => {
       dispatch(reset())
     }
-  }, [navigate, isError, message, dispatch])
+  }, [navigate, isError, message, dispatch, user])
 
   if(isLoading) {
     return <Spinner />
