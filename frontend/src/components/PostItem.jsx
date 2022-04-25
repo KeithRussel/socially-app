@@ -1,15 +1,36 @@
 import { useState } from 'react'
 import {FaEllipsisH, FaEdit, FaTrash} from 'react-icons/fa'
-import { useDispatch } from 'react-redux'
-import {deletePost} from '../features/posts/postSlice'
+import { useDispatch} from 'react-redux'
+import {deletePost, getPost, nullPost} from '../features/posts/postSlice'
+import ModalSet from '../components/ModalSet'
+import {Link, useParams} from 'react-router-dom'
 
 function PostItem({post}) {
     const [showButton, setShowButton] = useState(false)
-    const onClick = () => {setShowButton(!showButton)}
+    const onClick = () => {
+        setShowButton(!showButton)
+        console.log(postId)
+    }
 
     const dispatch = useDispatch()
 
+    const [isModalOpen, setModalIsOpen] = useState(false);
+
+    let postId = useParams()
+	
+	const toggleModal = (e) => {
+        e.preventDefault()
+		setModalIsOpen(!isModalOpen);
+        if(!isModalOpen) {
+            dispatch(getPost(post._id))
+        } else {
+            dispatch(nullPost(post._id))
+        }
+	};
+
     return (
+        <>
+        {isModalOpen && <ModalSet post={post} onRequestClose={toggleModal} />}
     <div className="posts">
         <div className='posts__head'>
             <div className="posts__head_flex">
@@ -22,8 +43,8 @@ function PostItem({post}) {
             <div className='posts__head_ellipsis'>
                 <div onClick={onClick}><FaEllipsisH /></div>
                 {showButton ?<div>
-                    <h4><FaEdit /> Edit</h4>
-                    <h4 onClick={() => dispatch(deletePost(post._id))}><FaTrash /> Delete</h4>
+                    <button type="button"><Link key={post._id} to={`/edit/${post._id}`}><FaEdit /> Edit</Link></button>
+                    <button onClick={() => dispatch(deletePost(post._id))}><FaTrash /> Delete</button>
                 </div> : null }
                 
             </div>
@@ -36,6 +57,7 @@ function PostItem({post}) {
             <div type="button" className="comments">Comment</div>
         </div>
     </div>
+    </>
     )
 }
 

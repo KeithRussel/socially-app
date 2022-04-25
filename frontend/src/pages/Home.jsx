@@ -1,11 +1,12 @@
 import Header from '../components/Header'
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import Spinner from '../components/Spinner'
-import { getPosts, reset } from '../features/posts/postSlice'
+import { getPosts, reset, nullPost } from '../features/posts/postSlice'
 import PostItem from '../components/PostItem'
-import PostForm from '../components/PostForm'
+// import PostForm from '../components/PostForm'
+import ModalSet from '../components/ModalSet'
 
 const Home = () => {
   const navigate = useNavigate()
@@ -23,11 +24,18 @@ const Home = () => {
     }
 
     dispatch(getPosts())
+    dispatch(nullPost())
 
     return () => {
       dispatch(reset())
     }
   }, [navigate, isError, message, dispatch, user])
+
+  const [isModalOpen, setModalIsOpen] = useState(false);
+	
+	const toggleModal = () => {
+		setModalIsOpen(!isModalOpen);
+	};
 
   if(isLoading) {
     return <Spinner />
@@ -35,6 +43,7 @@ const Home = () => {
 
   return (
     <>
+    {isModalOpen && <ModalSet onRequestClose={toggleModal} />}
     <Header />
     <div className='container'>
       <div className="home__wrapper">
@@ -42,7 +51,11 @@ const Home = () => {
           <h1>COMING SOON</h1>
         </section>
         <section className="home__posts">
-          <PostForm />
+        <div className="form-group">
+            <label htmlFor="text">Share your thoughts..</label>
+            <input onClick={toggleModal} />
+        </div>
+          {/* <PostForm /> */}
           {posts.map((post) => (
             <PostItem key={post._id} post={post} />
           ))}

@@ -1,19 +1,44 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {setPost, getPosts} from '../features/posts/postSlice'
+import {setPost, updatePost} from '../features/posts/postSlice'
 
-function PostForm() {
+function PostForm({post}) {
 const [text, setText] = useState('')
 
 const dispatch = useDispatch()
 
-// const {posts, isLoading, isError, message, post} = useSelector((state) => state.posts)
+const {singlepost} = useSelector((state) => state.posts)
+
+useEffect(() => {
+    if (singlepost) {
+        setText(singlepost.text);
+    } else {
+        setText('')
+    }
+  }, [singlepost]);
 
 const onSubmit = e => {
     e.preventDefault()
 
-    dispatch(setPost({text}))
+    if(singlepost === null) {
+        dispatch(setPost({text}))
+    } else {
+        dispatch(updatePost(post._id, {text}))
+        console.log('update text')
+    }
+
+    // dispatch(setPost({text}))
     setText('')
+}
+
+const onChange = e => {
+    // if(!singlepost) {
+    //     setText(e.target.value)
+    // } else {
+    //     setText(singlepost.text);
+    // }
+    // let {name, value} = e.target
+    setText(e.target.value)
 }
 
   return (
@@ -21,8 +46,8 @@ const onSubmit = e => {
         <section className='form'>
             <form onSubmit={onSubmit}>
                 <div className="form-group">
-                    <label htmlFor="text">Share your thoughts..</label>
-                    <textarea type="text" name='text' id='text' value={text} onChange={(e) => setText(e.target.value)} />
+                    <label htmlFor="text">{singlepost ? 'Edit your post' : 'Share your thoughts..'}</label>
+                    <textarea type="text" name='text' id='text' value={text} onChange={onChange} />
                 </div>
                 <div className="form-group">
                     <button className="btn btn-block" type='submit'>

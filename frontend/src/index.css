@@ -66,10 +66,6 @@ button {
   margin-bottom: 20px;
 }
 
-.btn:hover {
-  transform: scale(0.98);
-}
-
 .loadingSpinnerContainer {
   position: fixed;
   top: 0;
@@ -135,6 +131,18 @@ button {
 
 .header ul li a svg {
   margin-right: 5px;
+}
+
+.modal__backdrop {
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  z-index: 1001;
+  background: aquamarine;
+  height: 100vh;
+  top: 0;
 }
 
 /* REGISTER PAGE */

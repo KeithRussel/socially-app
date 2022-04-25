@@ -47,10 +47,10 @@ const setPost = asyncHandler(async (req, res) => {
   res.status(200).json(post);
 });
 
-// @desc    Update post
+// @desc    Get user post by id
 // @route   GET /api/posts/:id
 // @access  Private
-const updatePost = asyncHandler(async (req, res) => {
+const getUserPost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id);
 
   if (!post) {
@@ -72,11 +72,52 @@ const updatePost = asyncHandler(async (req, res) => {
     throw new Error("User not authorized");
   }
 
-  const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
+  res.status(200).json(post);
+});
 
-  res.status(200).json(updatedPost);
+// @desc    Update post
+// @route   PUT /api/posts/:id
+// @access  Private
+const updatePost = asyncHandler(async (req, res) => {
+  const { text } = req.body;
+
+  const post = await Post.findById(req.params.id);
+
+  if (post) {
+    post.text = text;
+
+    const updatedPost = await post.save();
+    res.json(updatedPost);
+  } else {
+    res.status(400);
+    throw new Error("Post not found");
+  }
+  // const post = await Post.findById(req.params.id);
+
+  // if (!post) {
+  //   res.status(400);
+  //   throw new Error("Post not found");
+  // }
+
+  // const user = await User.findById(req.user.id);
+
+  // Check for user
+  // if (!req.user) {
+  //   res.status(401);
+  //   throw new Error("User not found");
+  // }
+
+  // Make sure the logged in user matches the post user
+  // if (post.user.toString() !== req.user.id) {
+  //   res.status(401);
+  //   throw new Error("User not authorized");
+  // }
+
+  // const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, {
+  //   new: true,
+  // });
+
+  // res.status(200).json(updatedPost);
 });
 
 // @desc    Like a post
@@ -151,4 +192,5 @@ module.exports = {
   deletePost,
   likePost,
   getUserPosts,
+  getUserPost,
 };
