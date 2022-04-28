@@ -31,7 +31,7 @@ function Profile() {
   }
   return (
     <>
-    <Header />
+    {/* <Header /> */}
     <div className='profile'>
       <div className="profile__coverphoto">
         <img src="https://picsum.photos/1080/400" alt="" />

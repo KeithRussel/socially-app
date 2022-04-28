@@ -39,18 +39,6 @@ const deletePost = async (postId, token) => {
 
   const response = await axios.delete(API_URL + postId, config);
 
-  return response.data;
-};
-
-// Update user post
-const updatePost = async (post, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  const response = await axios.put(API_URL + post._id, post, config);
   console.log(response.data);
 
   return response.data;
@@ -69,6 +57,35 @@ const getPost = async (postId, token) => {
   return response.data;
 };
 
+// Update user post
+const updatePost = async (id, post, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.put(API_URL + id, post, config);
+  console.log(response.data);
+
+  return response.data;
+};
+
+// Update like post
+const likePost = async (postId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.put(API_URL + `${postId}/like`, config);
+
+  console.log(response.data);
+
+  return response.data;
+};
+
 const postService = {
   getPosts,
   setPost,
@@ -76,6 +93,7 @@ const postService = {
   deletePost,
   updatePost,
   getPost,
+  likePost,
 };
 
 export default postService;

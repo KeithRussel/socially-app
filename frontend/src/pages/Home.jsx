@@ -24,7 +24,7 @@ const Home = () => {
     }
 
     dispatch(getPosts())
-    dispatch(nullPost())
+    // dispatch(nullPost())
 
     return () => {
       dispatch(reset())
@@ -44,7 +44,7 @@ const Home = () => {
   return (
     <>
     {isModalOpen && <ModalSet onRequestClose={toggleModal} />}
-    <Header />
+    {/* <Header /> */}
     <div className='container'>
       <div className="home__wrapper">
       <section className="home__left_sidebar">
@@ -56,9 +56,9 @@ const Home = () => {
             <input onClick={toggleModal} />
         </div>
           {/* <PostForm /> */}
-          {posts.map((post) => (
+          {posts ? posts.map((post) => (
             <PostItem key={post._id} post={post} />
-          ))}
+          )) : null}
         </section>
         <section className="home__profiles">
           <h1>COMING SOON</h1>

@@ -18,7 +18,7 @@ router
   .delete(protect, deletePost)
   .put(protect, updatePost)
   .get(protect, getUserPost);
-router.route("/like/:id").put(protect, likePost);
 router.route("/user/:id").get(getUserPosts);
+router.put("/:id/like", protect, likePost);
 
 module.exports = router;

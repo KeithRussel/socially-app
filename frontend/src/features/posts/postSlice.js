@@ -82,26 +82,6 @@ export const deletePost = createAsyncThunk(
   }
 );
 
-// Update user post
-export const updatePost = createAsyncThunk(
-  "posts/update",
-  async (id, post, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await postService.updatePost(id, post, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
 // Get user single post
 export const getPost = createAsyncThunk(
   "posts/getSinglePost",
@@ -134,6 +114,43 @@ export const nullPost = createAsyncThunk(
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Update user post
+export const updatePost = createAsyncThunk(
+  "posts/update",
+  async (post, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await postService.updatePost(post._id, post, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Like a post
+export const likePost = createAsyncThunk(
+  "posts/likePost",
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await postService.likePost(id, token);
+    } catch (error) {
+      const message =
+        (error.respose && error.response.data && error.response.data.message) ||
         error.message ||
         error.toString();
       return thunkAPI.rejectWithValue(message);
@@ -209,7 +226,7 @@ export const postsSlice = createSlice({
       })
       .addCase(updatePost.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isSuccess = true;
+        state.updateIsSuccess = true;
         state.posts = state.posts.map((post) => post._id === action.payload.id);
         // state.singlepost = action.payload;
       })
@@ -235,6 +252,28 @@ export const postsSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.singlepost = null;
+      })
+      .addCase(likePost.pending, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(likePost.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        // state.posts = state.posts.map((post) => post._id === action.payload.id);
+        // state.posts.unshift(action.payload);
+        state.posts = state.posts.map((post) =>
+          post._id === action.payload.id
+            ? { ...post, likes: action.payload.likes }
+            : post
+        );
+        // state.posts = state.posts.filter(
+        //   (post) => post._id !== action.payload.id
+        // );
+      })
+      .addCase(likePost.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       });
   },
 });
