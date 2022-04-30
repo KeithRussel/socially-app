@@ -153,6 +153,7 @@ export const likePost = createAsyncThunk(
         (error.respose && error.response.data && error.response.data.message) ||
         error.message ||
         error.toString();
+
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -259,16 +260,11 @@ export const postsSlice = createSlice({
       .addCase(likePost.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        // state.posts = state.posts.map((post) => post._id === action.payload.id);
-        // state.posts.unshift(action.payload);
         state.posts = state.posts.map((post) =>
           post._id === action.payload.id
             ? { ...post, likes: action.payload.likes }
             : post
         );
-        // state.posts = state.posts.filter(
-        //   (post) => post._id !== action.payload.id
-        // );
       })
       .addCase(likePost.rejected, (state, action) => {
         state.isLoading = false;

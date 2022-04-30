@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import {FaEllipsisH, FaEdit, FaTrash} from 'react-icons/fa'
 import { useDispatch, useSelector} from 'react-redux'
-import {deletePost, getPost, nullPost, likePost} from '../features/posts/postSlice'
+import {deletePost, likePost} from '../features/posts/postSlice'
 import ModalSet from '../components/ModalSet'
 import {Link, useParams} from 'react-router-dom'
 
 function PostItem({post}) {
+    const [text, setText] = useState('')
     const [showButton, setShowButton] = useState(false)
     const [postId, setPostId] = useState(
         post._id
@@ -36,7 +37,7 @@ function PostItem({post}) {
     const onLikePost = (e) => {
         e.preventDefault()
         dispatch(likePost(postId))
-        console.log(typeof (postId))
+        console.log(id)
     }
 
     return (
@@ -57,7 +58,7 @@ function PostItem({post}) {
                             <button type="button"><Link key={post._id} to={`/edit/${post._id}`}><FaEdit /> Edit</Link></button>
                             <button onClick={() => dispatch(deletePost(post._id))}><FaTrash /> Delete</button>
                         </div> : null }
-                    </div> : null }                    
+                    </div> : null }
                 </div>
                 <div className="user__post">
                     <p>{post.text}</p>

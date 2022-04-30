@@ -137,7 +137,7 @@ const likePost = asyncHandler(async (req, res) => {
 
   await post.save();
 
-  res.json(post.likes);
+  res.status(200).json(post.likes);
 
   // res.status(200).json({ message: "Liked" });
 });

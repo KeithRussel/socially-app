@@ -79,7 +79,7 @@ const likePost = async (postId, token) => {
     },
   };
 
-  const response = await axios.put(API_URL + `${postId}/like`, config);
+  const response = await axios.put(API_URL + postId, config);
 
   console.log(response.data);
 
