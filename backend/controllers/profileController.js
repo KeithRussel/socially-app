@@ -22,8 +22,28 @@ const getProfileMe = asyncHandler(async (req, res) => {
   //   res.json({ message: "User profile display" });
 });
 
+// @desc    Set/Create Profile
+// @route   PUT /api/profile/me
+// @access  Private
+const createProfile = asyncHandler(async (req, res) => {
+  const profileFields = {
+    bio: req.body.bio,
+    address: req.body.address,
+    interest: req.body.interest,
+    user: req.user.id,
+  };
+
+  const profile = await Profile.findOneAndUpdate(
+    { user: req.user.id },
+    { $set: profileFields },
+    { new: true, upsert: true }
+  );
+
+  res.status(200).json(profile);
+});
+
 // @desc    Create or Update user profile
-// @route   POST /api/profile
+// @route   PUT /api/profile
 // @access  Private
 const setProfile = asyncHandler(async (req, res) => {
   const profileFields = {
@@ -91,4 +111,5 @@ module.exports = {
   getProfiles,
   getUserProfile,
   deleteUserProfile,
+  createProfile,
 };

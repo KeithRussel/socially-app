@@ -1,11 +1,10 @@
 import {useEffect} from 'react'
-import Header from '../components/Header'
-import {FaEllipsisH} from 'react-icons/fa'
 import {useSelector, useDispatch} from 'react-redux'
 import Spinner from '../components/Spinner'
 import { getProfile, reset } from '../features/profile/profileSlice'
 import { getUserPosts } from '../features/posts/postSlice'
 import PostItem from '../components/PostItem'
+import { useNavigate } from 'react-router-dom'
 
 function Profile() {
   const dispatch = useDispatch()
@@ -13,10 +12,13 @@ function Profile() {
   const {user} = useSelector((state)=>state.auth)
   const {posts} = useSelector((state)=>state.posts)
 
+  let navigate = useNavigate()
+
   useEffect(() => {
     if(isError) {
       console.log(message)
     }
+
     dispatch(getProfile())
 
     dispatch(getUserPosts(user._id))
@@ -25,6 +27,12 @@ function Profile() {
       dispatch(reset())
     }
   }, [isError, message, dispatch, user._id])
+
+  const onEditProfileHandler = (e) => {
+    e.preventDefault()
+    console.log(profile._id)
+    navigate(`/profile/${profile._id}/edit`)
+  }
 
   if(isLoading) {
     return <Spinner />
@@ -45,7 +53,7 @@ function Profile() {
             </div>
           </div>
           <div className="profile__edit">
-            <button type="button" className="edit-profile">Edit Profile</button>
+            <button type="button" className="edit-profile" onClick={onEditProfileHandler}>Edit Profile</button>
           </div>
         </div>
         <div className="divider">

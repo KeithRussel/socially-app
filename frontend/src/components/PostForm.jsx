@@ -1,11 +1,13 @@
 import {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {setPost, updatePost} from '../features/posts/postSlice'
+import { useNavigate } from 'react-router-dom'
 
 function PostForm({post}) {
 const [text, setText] = useState('')
 
 const dispatch = useDispatch()
+const navigate = useNavigate()
 
 const {singlepost} = useSelector((state) => state.posts)
 
@@ -26,6 +28,8 @@ const onSubmit = e => {
         dispatch(updatePost(post._id, {text}))
         console.log('update text')
     }
+
+    navigate('/')
 
     // dispatch(setPost({text}))
     setText('')

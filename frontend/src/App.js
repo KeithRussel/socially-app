@@ -7,6 +7,7 @@ import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import EditPostPage from "./pages/EditPostPage";
+import EditProfilePage from "./pages/EditProfilePage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/edit/:id" element={<EditPostPage />} />
+          <Route path="/profile/:id/edit" element={<EditProfilePage />} />
         </Routes>
       </Router>
       <ToastContainer />

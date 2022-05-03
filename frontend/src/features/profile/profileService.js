@@ -15,8 +15,38 @@ const getProfile = async (token) => {
   return response.data;
 };
 
+// Update profile
+const setProfile = async (id, profile, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.put(API_URL + `${id}/edit`, profile, config);
+  console.log(response.data);
+
+  return response.data;
+};
+
+// Create profile
+const createProfile = async (profile, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.put(API_URL + `me`, profile, config);
+  console.log(response.data);
+
+  return response.data;
+};
+
 const profileService = {
   getProfile,
+  setProfile,
+  createProfile,
 };
 
 export default profileService;

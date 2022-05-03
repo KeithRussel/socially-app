@@ -16,7 +16,7 @@ router.route("/").get(getPosts).post(protect, setPost);
 router
   .route("/:id")
   .delete(protect, deletePost)
-  .put(protect, likePost)
+  .patch(protect, likePost)
   .put(protect, updatePost)
   .get(protect, getUserPost);
 router.route("/user/:id").get(getUserPosts);

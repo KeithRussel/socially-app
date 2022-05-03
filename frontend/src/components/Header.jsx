@@ -2,16 +2,27 @@ import {FaSignInAlt, FaUser} from 'react-icons/fa'
 import {Link, useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import {logout, reset} from '../features/auth/authSlice'
+import {createProfile} from '../features/profile/profileSlice'
 
 function Header() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {user} = useSelector((state) => state.auth)
+    const {profile} = useSelector((state) => state.profile)
 
     const onLogout = () => {
         dispatch(logout())
         dispatch(reset())
         navigate('/')
+    }
+
+    const onClick = () => {
+        if(profile === null) {
+            console.log('No Profile')
+            dispatch(createProfile())
+        } else {
+            console.log('Have Profile')
+        }
     }
   return (
     <header className='header'>
@@ -24,7 +35,7 @@ function Header() {
                     <FaSignInAlt /> Logout
                 </button>
             </li><li>
-                <Link to={`/profile/user/me`}>
+                <Link to={`/profile/user/me`} onClick={onClick}>
                     <FaUser /> Profile
                 </Link>
             </li></>) : (<><li>
