@@ -140,9 +140,15 @@ button {
   margin-right: auto;
   position: absolute;
   z-index: 1001;
-  background: aquamarine;
+  background: #000000cf;
   height: 100vh;
   top: 0;
+  display: flex;
+}
+
+.modal__backdrop .modal__container {
+  width: 50%;
+  margin: auto;
 }
 
 /* REGISTER PAGE */

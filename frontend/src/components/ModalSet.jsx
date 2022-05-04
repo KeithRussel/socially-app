@@ -25,7 +25,6 @@ const ModalSet = ({ onRequestClose, post }) => {
 	return (
 		<div className="modal__backdrop">
 			<div className="modal__container">
-				<h3 className="modal__title">I'm a modal!</h3>
 				<PostForm post={post} />
 				<button type="button" onClick={onRequestClose}>
 					Close this modal

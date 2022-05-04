@@ -50,7 +50,7 @@ const onChange = e => {
         <section className='form'>
             <form onSubmit={onSubmit}>
                 <div className="form-group">
-                    <label htmlFor="text">{singlepost ? 'Edit your post' : 'Share your thoughts..'}</label>
+                    <label htmlFor="text" style={{color: '#fff'}}>{singlepost ? 'Edit your post' : 'Share your thoughts..'}</label>
                     <textarea type="text" name='text' id='text' value={text} onChange={onChange} />
                 </div>
                 <div className="form-group">
