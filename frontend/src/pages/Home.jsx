@@ -3,7 +3,8 @@ import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import Spinner from '../components/Spinner'
-import { getPosts, reset, nullPost } from '../features/posts/postSlice'
+import { getPosts, reset } from '../features/posts/postSlice'
+import { getProfile } from '../features/profile/profileSlice'
 import PostItem from '../components/PostItem'
 // import PostForm from '../components/PostForm'
 import ModalSet from '../components/ModalSet'
@@ -24,6 +25,7 @@ const Home = () => {
     }
 
     dispatch(getPosts())
+    dispatch(getProfile())
     // dispatch(nullPost())
 
     return () => {
