@@ -6,12 +6,11 @@ import ModalSet from '../components/ModalSet'
 import {Link, useParams} from 'react-router-dom'
 
 function PostItem({post}) {
-    const [text, setText] = useState('')
     const [showButton, setShowButton] = useState(false)
-    const [postId, setPostId] = useState(
-        post._id
-    )
+    const [isModalOpen, setModalIsOpen] = useState(false);
     const {user} = useSelector((state)=>state.auth)
+
+    const dispatch = useDispatch()
 
     let {id} = useParams()
 
@@ -19,24 +18,15 @@ function PostItem({post}) {
         setShowButton(!showButton)
         console.log(id)
     }
-
-    const dispatch = useDispatch()
-
-    const [isModalOpen, setModalIsOpen] = useState(false);
 	
 	const toggleModal = (e) => {
         e.preventDefault()
 		setModalIsOpen(!isModalOpen);
-        if(!isModalOpen) {
-            // dispatch(getPost(post._id))
-        } else {
-            // dispatch(nullPost(post._id))
-        }
 	};
 
     const onLikePost = (e) => {
         e.preventDefault()
-        dispatch(likePost(postId))
+        dispatch(likePost(post._id))
         console.log(id)
     }
 
@@ -64,7 +54,7 @@ function PostItem({post}) {
                     <p>{post.text}</p>
                 </div>
                 <div className="posts__buttons btn-group">
-                    <div type="button" onClick={onLikePost} className="likes">{post.likes.length < 1 ? <span>Like</span> : <span>{post.likes.length} Likes</span>  }</div>
+                    <button onClick={onLikePost} className="likes">{post.likes.length < 1 ? <span>Like</span> : <span>{post.likes.length} Likes</span>  }</button>
                     <div type="button" className="comments">Comment</div>
                 </div>
             </div>

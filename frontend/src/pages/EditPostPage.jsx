@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import {updatePost, getPost, reset} from '../features/posts/postSlice'
+import {updatePost, getPost, reset, likePost} from '../features/posts/postSlice'
 
 function EditPostPage() {
 let {id} = useParams();
@@ -29,9 +29,10 @@ useEffect(() => {
 const onSubmit = e => {
     e.preventDefault()
 
-    console.log(id)
+    console.log(typeof({_id: id}))
 
     dispatch(updatePost({_id: id, text}))
+    // dispatch(likePost(id))
 }
 
 const onChange = e => {

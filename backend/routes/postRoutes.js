@@ -16,11 +16,11 @@ router.route("/").get(getPosts).post(protect, setPost);
 router
   .route("/:id")
   .delete(protect, deletePost)
-  .patch(protect, likePost)
+  // .patch(protect, likePost)
   .put(protect, updatePost)
   .get(protect, getUserPost);
 router.route("/user/:id").get(getUserPosts);
 // router.route("/edit/:id").put(protect, updatePost);
-// router.put("/like/:id", protect, likePost);
+router.patch("/like/:id", protect, likePost);
 
 module.exports = router;

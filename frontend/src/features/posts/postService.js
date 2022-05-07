@@ -29,21 +29,6 @@ const getUserPosts = async (userId) => {
   return response.data;
 };
 
-// Delete user post
-const deletePost = async (postId, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  const response = await axios.delete(API_URL + postId, config);
-
-  console.log(response.data);
-
-  return response.data;
-};
-
 // Get user single post
 const getPost = async (postId, token) => {
   const config = {
@@ -79,7 +64,22 @@ const likePost = async (postId, token) => {
     },
   };
 
-  const response = await axios.patch(API_URL + postId, config);
+  const response = await axios.patch(API_URL + `like/${postId}`, config);
+
+  console.log(response.data);
+
+  return response.data;
+};
+
+// Delete user post
+const deletePost = async (postId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.delete(API_URL + postId, config);
 
   console.log(response.data);
 

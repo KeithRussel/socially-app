@@ -236,9 +236,9 @@ export const postsSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
-      // .addCase(getPost.pending, (state) => {
-      //   state.isLoading = true;
-      // })
+      .addCase(getPost.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(getPost.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;

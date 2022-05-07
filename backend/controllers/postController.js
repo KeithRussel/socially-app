@@ -108,7 +108,7 @@ const updatePost = asyncHandler(async (req, res) => {
 });
 
 // @desc    Like a post
-// @route   GET /api/posts/like/:id
+// @route   PUT /api/posts/like/:id
 // @access  Private
 const likePost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id);
