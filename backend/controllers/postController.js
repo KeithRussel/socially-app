@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const { check } = require("express-validator");
 
 const Post = require("../models/postModel");
 const User = require("../models/userModel");
@@ -172,6 +173,36 @@ const deletePost = asyncHandler(async (req, res) => {
   res.status(200).json({ id: req.params.id });
 });
 
+// @desc    Comment on post
+// @route   POST /api/posts/comment/:id
+// @access  Private
+const addComment = asyncHandler(async (req, res) => {
+  const post = await Post.findById(req.params.id);
+  const user = await User.findById(req.user.id).select("-password");
+
+  if (!post) {
+    res.status(400);
+    throw new Error("Post not found");
+  }
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User not found");
+  }
+
+  const newComment = {
+    text: req.body.text,
+    name: user.name,
+    user: req.user.id,
+  };
+
+  post.comments.push(newComment);
+
+  await post.save();
+
+  res.status(200).json(post.comments);
+});
+
 module.exports = {
   getPosts,
   setPost,
@@ -180,4 +211,5 @@ module.exports = {
   likePost,
   getUserPosts,
   getUserPost,
+  addComment,
 };

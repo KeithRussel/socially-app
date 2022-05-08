@@ -19,6 +19,25 @@ const postSchema = mongoose.Schema(
         },
       },
     ],
+    comments: [
+      {
+        text: {
+          type: String,
+          require: [true, "Please add a text value"],
+        },
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+        name: {
+          type: String,
+        },
+        date: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
