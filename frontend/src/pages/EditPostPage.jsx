@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import {updatePost, getPost, reset, likePost} from '../features/posts/postSlice'
+import {updatePost, getPost, reset} from '../features/posts/postSlice'
 
 function EditPostPage() {
 let {id} = useParams();
